@@ -1,0 +1,105 @@
+﻿@model MVCProject_Iqbal.Models.ViewModels.TraineeVM
+
+@{
+    ViewBag.Title = "Details";
+
+}
+
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#examInfo").click(function () {
+            $.ajax({
+                url: "@Url.Action("ExamDetails", "Trainee", new { id=Model.TraineeID})",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $("#examdisplay table tbody").empty;
+                    for (var i = 0; i < result.length; i++) {
+                        $("#examdisplay table tbody").append("<tr><td>" + result[i].examName + "</td><td>" + result[i].examDate + "</td><td>" + result[i].resultDate + "</td><td>" + result[i].totalMarks + "</td></tr>");
+                    }
+                    $("#examdisplay").show();
+                }
+            });
+            this.disabled = true;
+        })
+    })
+</script>
+
+
+
+
+<h2>Details</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <fieldset>
+                <legend>Trainee Information</legend>
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.TraineeName) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.TraineeName)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.CellPhone) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.CellPhone)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.EmailAddress) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.EmailAddress)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.ContactAddress) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.ContactAddress)
+                </span>
+                <br />
+
+                <span class="display-label">
+                    @Html.DisplayNameFor(model => model.Teacher.TeacherName) :
+                </span>
+                <span class="display-field">
+                    @Html.DisplayFor(model => model.Teacher.TeacherName)
+                </span>
+
+            </fieldset>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.TraineeID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <button class="btn btn-info" id="examInfo" data-exam-id="@Model.TraineeID">Exam Details</button>
+            </div>
+            <div id="examdisplay" style="display:none">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>Exam Name</tr>
+                        <tr>Exam Date</tr>
+                        <tr>Result Date</tr>
+                        <tr>Total Marks</tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

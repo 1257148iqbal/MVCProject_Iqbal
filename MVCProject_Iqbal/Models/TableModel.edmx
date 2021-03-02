@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MVCProject_Iqbal_DBModel1.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ExamDetails">
+          <Key>
+            <PropertyRef Name="ExamDetailsID" />
+          </Key>
+          <Property Name="ExamDetailsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ExamName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ExamDate" Type="date" Nullable="false" />
+          <Property Name="ResultPublishDate" Type="date" Nullable="false" />
+          <Property Name="MCQ" Type="int" Nullable="false" />
+          <Property Name="Descriptive" Type="int" Nullable="false" />
+          <Property Name="Evidence" Type="int" Nullable="false" />
+          <Property Name="TraineeID" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" StoreGeneratedPattern="Computed" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeacherName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="CellPhone" Type="nvarchar(max)" />
+          <Property Name="ContactAddress" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Trainees">
+          <Key>
+            <PropertyRef Name="TraineeID" />
+          </Key>
+          <Property Name="TraineeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TraineeName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="EmailAddress" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CellPhone" Type="nvarchar(max)" />
+          <Property Name="ContactAddress" Type="nvarchar(max)" />
+          <Property Name="TeacherID" Type="int" />
+        </EntityType>
+        <Association Name="FK__ExamDetai__Train__6E01572D">
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="1" />
+          <End Role="ExamDetails" Type="Self.ExamDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainees">
+              <PropertyRef Name="TraineeID" />
+            </Principal>
+            <Dependent Role="ExamDetails">
+              <PropertyRef Name="TraineeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Trainees" Type="Self.Trainees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCProject_Iqbal_DBModel1StoreContainer">
+          <EntitySet Name="ExamDetails" EntityType="Self.ExamDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Trainees" EntityType="Self.Trainees" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ExamDetai__Train__6E01572D" Association="Self.FK__ExamDetai__Train__6E01572D">
+            <End Role="Trainees" EntitySet="Trainees" />
+            <End Role="ExamDetails" EntitySet="ExamDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Teacher" Association="Self.FK_Teacher">
+            <End Role="Teacher" EntitySet="Teacher" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCProject_Iqbal_DBModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeacherName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Trainees" Relationship="Self.FK_Teacher" FromRole="Teacher" ToRole="Trainees" />
+        </EntityType>
+        <EntityType Name="Trainee">
+          <Key>
+            <PropertyRef Name="TraineeID" />
+          </Key>
+          <Property Name="TraineeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TraineeName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CellPhone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContactAddress" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TeacherID" Type="Int32" />
+          <NavigationProperty Name="Teacher" Relationship="Self.FK_Teacher" FromRole="Trainees" ToRole="Teacher" />
+          <NavigationProperty Name="ExamDetails" Relationship="MVCProject_Iqbal_DBModel1.FK__ExamDetai__Train__6E01572D" FromRole="Trainee" ToRole="ExamDetail" />
+        </EntityType>
+        <Association Name="FK_Teacher">
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Trainees" Type="Self.Trainee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="TeacherID" />
+            </Principal>
+            <Dependent Role="Trainees">
+              <PropertyRef Name="TeacherID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCProject_Iqbal_DBEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Teachers" EntityType="Self.Teacher" />
+          <EntitySet Name="Trainees" EntityType="Self.Trainee" />
+          <AssociationSet Name="FK_Teacher" Association="Self.FK_Teacher">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Trainees" EntitySet="Trainees" />
+          </AssociationSet>
+          <EntitySet Name="ExamDetails" EntityType="MVCProject_Iqbal_DBModel1.ExamDetail" />
+          <AssociationSet Name="FK__ExamDetai__Train__6E01572D" Association="MVCProject_Iqbal_DBModel1.FK__ExamDetai__Train__6E01572D">
+            <End Role="Trainee" EntitySet="Trainees" />
+            <End Role="ExamDetail" EntitySet="ExamDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ExamDetail">
+          <Key>
+            <PropertyRef Name="ExamDetailsID" />
+          </Key>
+          <Property Name="ExamDetailsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ExamName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ExamDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="ResultPublishDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="MCQ" Type="Int32" Nullable="false" />
+          <Property Name="Descriptive" Type="Int32" Nullable="false" />
+          <Property Name="Evidence" Type="Int32" Nullable="false" />
+          <Property Name="TraineeID" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <NavigationProperty Name="Trainee" Relationship="MVCProject_Iqbal_DBModel1.FK__ExamDetai__Train__6E01572D" FromRole="ExamDetail" ToRole="Trainee" />
+        </EntityType>
+        <Association Name="FK__ExamDetai__Train__6E01572D">
+          <End Type="MVCProject_Iqbal_DBModel1.Trainee" Role="Trainee" Multiplicity="1" />
+          <End Type="MVCProject_Iqbal_DBModel1.ExamDetail" Role="ExamDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Trainee">
+              <PropertyRef Name="TraineeID" />
+            </Principal>
+            <Dependent Role="ExamDetail">
+              <PropertyRef Name="TraineeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCProject_Iqbal_DBModel1StoreContainer" CdmEntityContainer="MVCProject_Iqbal_DBEntities1">
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="MVCProject_Iqbal_DBModel1.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Trainees">
+            <EntityTypeMapping TypeName="MVCProject_Iqbal_DBModel1.Trainee">
+              <MappingFragment StoreEntitySet="Trainees">
+                <ScalarProperty Name="TraineeID" ColumnName="TraineeID" />
+                <ScalarProperty Name="TraineeName" ColumnName="TraineeName" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="ContactAddress" ColumnName="ContactAddress" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ExamDetails">
+            <EntityTypeMapping TypeName="MVCProject_Iqbal_DBModel1.ExamDetail">
+              <MappingFragment StoreEntitySet="ExamDetails">
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TraineeID" ColumnName="TraineeID" />
+                <ScalarProperty Name="Evidence" ColumnName="Evidence" />
+                <ScalarProperty Name="Descriptive" ColumnName="Descriptive" />
+                <ScalarProperty Name="MCQ" ColumnName="MCQ" />
+                <ScalarProperty Name="ResultPublishDate" ColumnName="ResultPublishDate" />
+                <ScalarProperty Name="ExamDate" ColumnName="ExamDate" />
+                <ScalarProperty Name="ExamName" ColumnName="ExamName" />
+                <ScalarProperty Name="ExamDetailsID" ColumnName="ExamDetailsID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,47 @@
+﻿@model MVCProject_Iqbal.Models.Teacher
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (Ajax.BeginForm("Add", "Teacher", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "div-record", OnSuccess = "$('.close').click()" }))
+{
+    <div class="modal-body">
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    @Html.TextBoxFor(m => m.TeacherName, new { @class = "form-control", @placeholder = "TeacherName" })
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Email" })
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                    @Html.TextBoxFor(m => m.CellPhone, new { @class = "form-control", @placeholder = "CellPhone" })
+                </div>
+            </div>
+        </div>
+        <div class="row form-group">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <span class="input-group-addon"><i class="fa fa-globe"></i></span>
+                    @Html.TextBoxFor(m => m.ContactAddress, new { @class = "form-control", @placeholder = "ContactAddress" })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i>&nbsp;Close</button>
+        <button type="submit" class="btn btn-primary" name="cmd"><i class="fa fa-check"></i>&nbsp;Save</button>
+    </div>
+}
+

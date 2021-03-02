@@ -1,0 +1,66 @@
+﻿@model IList<MVCProject_Iqbal.Models.Teacher>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Teacher Name</th>
+                <th>Email Address</th>
+                <th>CellPhone</th>
+                <th>Contact Address</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TeacherName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ContactAddress)
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Teacher", new { id = item.TeacherID })" class="editDialog">
+                            <i class="fa
+fa-pencil-square-o"></i>&nbsp;Edit
+                        </a>
+                    </td>
+                    <td>
+                        @Ajax.ActionLink("Delete", "Delete", "Teacher", new { @id = item.TeacherID }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-record" }, new { @class = "fa fa-trash-o" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#Add').click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $('.divForAdd').html(response);
+            });
+            $('#Add-Model').modal({
+                backdrop: 'static',
+            }, 'show');
+        });
+        $('.editDialog').click(function (event) {
+            event.preventDefault();
+            $.get(this.href, function (response) {
+                $('.divForUpdate').html(response);
+            });
+            $('#Edit-Model').modal({
+                backdrop: 'static',
+            }, 'show');
+        });
+    });
+</script>
+

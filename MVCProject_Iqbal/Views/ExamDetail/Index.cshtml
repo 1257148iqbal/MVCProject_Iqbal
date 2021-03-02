@@ -1,0 +1,75 @@
+﻿@model IEnumerable<MVCProject_Iqbal.Models.ExamDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExamDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ResultPublishDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MCQ)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descriptive)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Evidence)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Total)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Trainee.TraineeName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ExamDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ResultPublishDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MCQ)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descriptive)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Evidence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Total)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Trainee.TraineeName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ExamDetailsID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ExamDetailsID })
+        </td>
+    </tr>
+}
+
+</table>
